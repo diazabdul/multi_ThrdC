@@ -9,14 +9,7 @@ public class Work
     static object monitor = new object();
     public static void Main()
     {
-        //// Start a thread that calls a parameterized static method.
-        //Thread newThread = new Thread(Work.DoWork);
-        //newThread.Start(42);
-
-        //// Start a thread that calls a parameterized instance method.
-        //Work w = new Work();
-        //newThread = new Thread(w.DoMoreWork);
-        //newThread.Start("Qhonthol.");
+        
         Thread oddThread = new Thread(Odd);
         Thread evenThread = new Thread(Even);
         n = 10;
@@ -98,10 +91,6 @@ public class Work
 
 
 
-        //for (int i = 0; i < 5; i++)
-        //    if (counter % 2 == 1)
-        //        Console.WriteLine("Thread #2",
-        //            counter);
-        //Console.ReadKey();
+       
     }
 }
