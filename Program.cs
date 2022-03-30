@@ -1,55 +1,54 @@
-﻿using System;
+using System;
 using System.Threading;
 
 public class Work
 {
-    public static int n;
-    public static int counter = 1;
+   // public static int n;
+   // public static int counter = 1;
     const int limit = 10;
     static object monitor = new object();
     public static void Main()
     {
-        
+        //Deklarasi Thread
         Thread oddThread = new Thread(Odd);
         Thread evenThread = new Thread(Even);
-        n = 10;
+        //n = 10;
         oddThread.Start();
+        //Memberi delay pada Thread
         Thread.Sleep(1000);
         evenThread.Start();
 
         evenThread.Join();
         oddThread.Join();
         Console.WriteLine("Done");
-        Console.ReadLine();
-      
+        Console.ReadKey();
 
-       
+
+
     }
 
     public static void Odd()
     {
         try
         {
-            //hold lock
+            //kunci monitor
             Monitor.Enter(monitor);
             for (int i = 1; i <= limit; i = i + 2)
             {
-                //Complete the task ( printing even number on console)
+  
                 Console.WriteLine("Thread #1 " + i);
-                //Notify other thread- here odd thread
-                //that I'm done, you do your job
+
                 Monitor.Pulse(monitor);
-                //I will wait here till odd thread notify me
-                // Monitor.Wait(monitor);
+            
                 Thread.Sleep(1000);
                 bool isLast = i == limit;
-                if (!isLast)
+                if (isLast= true)
                     Monitor.Wait(monitor);
             }
         }
         finally
         {
-            Monitor.Exit(monitor);//release the lock
+            Monitor.Exit(monitor);//lepas kuncian monitor yang diatas
         }
 
         //for(int i=0;i<5;i++)
@@ -64,33 +63,30 @@ public class Work
     {
         try
         {
-            //hold lock as console is shared between threads.
+            
             Monitor.Enter(monitor);
             for (int i = 2; i <= limit; i = i + 2)
             {
-                //Complete the task ( printing odd number on console)
+                
                 Console.WriteLine("Thread #2 " + i);
-                //Notify other thread that is to eventhread
-                //that I'm done you do your job
+                
                 Monitor.Pulse(monitor);
 
-                //I will wait here till even thread notify me
-                // Monitor.Wait(monitor);
+               
                 Thread.Sleep(2500);
-                // without this logic application will wait forever
+                
                 bool isLast = i == limit - 1;
-                if (!isLast)
-                    Monitor.Wait(monitor); //I will wait here till even thread notify me
+                if (isLast = true)
+                    Monitor.Wait(monitor); 
             }
         }
         finally
         {
-            //Release lock
             Monitor.Exit(monitor);
         }
 
 
 
-       
+
     }
 }
